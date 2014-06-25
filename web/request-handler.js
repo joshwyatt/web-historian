@@ -1,5 +1,6 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
+var headers = require('./http-helpers.js').headers;
 // require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
@@ -11,6 +12,7 @@ exports.handleRequest = function (req, res) {
   	},
   	GET: function(req, res){
 		statusCode = 200;
+    archive.readListOfUrls();
   	},
   	OPTIONS: function(){}
   };
@@ -19,5 +21,7 @@ exports.handleRequest = function (req, res) {
   console.log(req.method);
   handler[method](req, res);
 
-  res.end(statusCode, archive.paths.list);
+  res.writeHead(statusCode, headers);
+  console.log(archive.paths.list);
+  res.end(JSON.stringify(archive.paths.archivedSites));
 };
