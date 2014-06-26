@@ -25,22 +25,55 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(){
-  fs.readFile(paths.list, 'utf8', function (err, data) {
-    if (err) throw err;
-    console.log(data);
+exports.readListOfUrls = readListOfUrls = function(){
+  fs.readFile(paths.list, 'utf-8', function (err, data) {
+    if(err){
+      throw err;
+    }
+    data = data.split('/n').pop();
+    return data;
   });
 };
 
-exports.isUrlInList = function(){
-
+exports.isUrlInList = function(targetUrl){
+  var data = readListOfUrls();
+  for(var i = 0; i < data.length; i++){
+    var url = data[i];
+    if(targetUrl === url){
+      return true;
+    }
+  }
+  return false;
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(data){
+  fs.appendFile(paths.list, data);
 };
 
-exports.isURLArchived = function(){
+exports.isURLArchived = function(targetUrl){
+  fs.readdir(paths.archivedSites, function(err, data){
+    if(err){
+      throw err;
+    } else {
+      for(var i = 0; i < data.length; i++){
+        var url = data[i];
+        if(targetUrl = url){
+          return true;
+        }
+      }
+    }
+    return false;
+  });
 };
 
-exports.downloadUrls = function(){
+exports.downloadUrls = function(targetURL){
+
+  http.get(targetURL, function (err, res) {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    console.log(res.code, res.headers, res.buffer.toString());
+  });
 };

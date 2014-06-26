@@ -11,8 +11,11 @@ exports.handleRequest = function (req, res) {
 
   	},
   	GET: function(req, res){
-		statusCode = 200;
-    archive.readListOfUrls();
+		  statusCode = 200;
+      archive.readListOfUrls();
+      archive.isURLArchived();
+      //need to turn on this function... but it's thowing an error... investigate after dinner (defined in archive-helper)
+      // archive.downloadUrls();
   	},
   	OPTIONS: function(){}
   };
