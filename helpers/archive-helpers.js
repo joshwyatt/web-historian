@@ -13,7 +13,9 @@ var http = require('http-request');
 exports.paths = paths = {
   'siteAssets' : path.join(__dirname, '../web/public'),
   'archivedSites' : path.join(__dirname, '../archives/sites'),
-  'list' : path.join(__dirname, '../archives/sites.txt')
+  'list' : path.join(__dirname, '../archives/sites.txt'),
+  'indexHTML' : path.join(__dirname, '../web/public/index.html'),
+  'loading': path.join(__dirname, '../web/public/loading.html')
 };
 
 // Used for stubbing paths for jasmine tests, do not modify
@@ -29,15 +31,25 @@ exports.initialize = function(pathsObj){
 
 
 // A
-exports.readListOfUrls = function(callback){
+exports.readListOfUrls = function(targetUrl, callback){
   fs.readFile(paths.list, 'utf8', function (err, data) {
     if(err){
       throw err;
     }
     data = data.split('/n');
     data.pop();
-    callback(targetURL, data);
+    callback(targetUrl, data);
     return data;
+  });
+};
+
+exports.readIndex = function(callback){
+  fs.readFile(paths.indexHTML, 'utf8', function(err, data){
+    if(err){
+      throw err;
+    }
+    console.log('in request-handler.js...indexHTML: ' + data);
+    callback(data);
   });
 };
 

@@ -14,22 +14,23 @@ exports.handleRequest = function (req, res) {
       // if url is in list && url is in archive
         // download urls
 
-      var targetUrl = req.url;
-      var a = archive.readListOfUrls;
-      var b = archive.isUrlInList;
-      var c = archive.addUrlToList;
-      var d = archive.isURLArchived;
-      var e = archive.downloadUrls;
+      // var targetUrl = req.url;
+      // console.log("url method output:"+ req.data);
+      // var a = archive.readListOfUrls;
+      // var b = archive.isUrlInList;
+      // var c = archive.addUrlToList;
+      // var d = archive.isURLArchived;
+      // var e = archive.downloadUrls;
 
-      if( a(b) ){
-        if( d(targetUrl) ){
-          e();
-        }else{
-          // return an error
-        }
-      }else{
-        a(c);
-      }
+      // if( a(targetUrl , b) ){
+      //   if( d(targetUrl) ){
+      //     e();
+      //   }else{
+      //     // return an error
+      //   }
+      // }else{
+      //   a(c);
+      // }
 
       // // if( a(b) && a(c) ){
       // if(a(b)){
@@ -55,9 +56,11 @@ exports.handleRequest = function (req, res) {
   };
 
   var method = req.method;
-  console.log(req.method);
   handler[method](req, res);
 
   res.writeHead(statusCode, headers);
-  res.end(JSON.stringify(archive.paths.archivedSites));
+  var indexHTML = archive.readIndex(function(data){
+    return res.end(JSON.stringify(data));
+  });
+
 };
