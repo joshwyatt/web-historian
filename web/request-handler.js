@@ -1,6 +1,7 @@
 var path = require('path');
 var archive = require('../helpers/archive-helpers');
 var headers = require('./http-helpers.js').headers;
+var url = require('url');
 // require more modules/folders here!
 
 exports.handleRequest = function (req, res) {
@@ -11,6 +12,9 @@ exports.handleRequest = function (req, res) {
 
     },
   	GET: function(req, res){
+      console.log("req.url: " + req.url);
+      // console.log("req.url: "+ url.parse(req.url).pathname)
+
       // if url is in list && url is in archive
         // download urls
 

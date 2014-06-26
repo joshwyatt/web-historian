@@ -48,7 +48,6 @@ exports.readIndex = function(callback){
     if(err){
       throw err;
     }
-    console.log('in request-handler.js...indexHTML: ' + data);
     callback(data);
   });
 };
